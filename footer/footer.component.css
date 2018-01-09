@@ -1,0 +1,11 @@
+.signup-form .form-group input{width: 100% !important}
+
+.info-footer {
+	float: left;
+	width: 100%;
+	text-align: center;
+	background: #000;
+	color: #fff;
+	font-size: 13px;
+	margin-top: -12px; margin-bottom:0px; padding-bottom:10px;
+}

@@ -1,0 +1,676 @@
+<div class="overlay" *ngIf="show_loader"><div class="wip-loader"></div></div>
+<div class="clear-both"></div>
+<div class="banner-section2">
+      <div class="wrap">
+        <h2>Enter your details</h2>
+      </div>
+    </div>
+<div class="form-sec-register">
+<div class="container">
+<div class="alert alert-success saveSuccess-message" *ngIf="saveSuccess">
+    <strong>{{ successMessage }}</strong>
+</div>
+<div class="alert alert-danger saveSuccess-message" *ngIf="checkEmail">
+    <strong>{{ EmailMessage }}</strong>
+</div>
+  <form action="" [formGroup]="basicForm" (ngSubmit)="addMember(2, basicForm.value)">
+    <div class="first-section row" *ngIf="step_1">
+      <input type="hidden" formControlName="member_id" [(ngModel)]="member_id" />
+      <div class="col-md-12"><h3>Basic Details</h3></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Name <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="name" />
+          <span *ngIf="!basicForm.get('name').valid && basicForm.get('name').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Date of Birth <span class="required-sign">*</span></label>
+          <div class="input-group input-medium date">
+            <input type="text" class="form-control" ngbDatepicker #dob="ngbDatepicker" formControlName ="dob" readonly [minDate]="minDate" [maxDate]="maxDate">
+            <span class="input-group-btn">
+              <button class="btn default" type="button" (click)="dob.toggle()">
+                  <i class="fa fa-calendar"></i>
+              </button>
+            </span>
+        </div>
+          <span *ngIf="!basicForm.get('dob').valid && basicForm.get('dob').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Email Id <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="email"/>
+          <span *ngIf="basicForm.get('email').invalid && (basicForm.get('email').dirty || basicForm.get('email').touched)" class="error_message">
+            <span *ngIf="basicForm.get('email').errors.required">This field is required.
+            </span>
+            <span *ngIf="!basicForm.get('email').errors.required && basicForm.get('email').errors.pattern">
+            Please Enter a Valid Email Address.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Gender <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="gender" />Male 
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="2" formControlName="gender" />Female
+          </label>
+          <span *ngIf="!basicForm.get('gender').valid && basicForm.get('gender').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Create Profile For <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="create_for" >
+            <option  [value]="null" selected>Select Profile For</option>
+            <option *ngFor = "let status of create_for" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('create_for').valid && basicForm.get('create_for').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Religion <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="religion">
+            <option  [value]="null" selected>Select Religion</option>
+            <option *ngFor = "let status of religions" [value]="status">{{ status }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('religion').valid && basicForm.get('religion').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Mother Tongue <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="mother_tongue">
+            <option  [value]="null" selected>Select Mother Tongue</option>
+            <option *ngFor = "let status of mother_tongues" [value]="status" >{{ status }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('mother_tongue').valid && basicForm.get('mother_tongue').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Community <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="community">
+            <option  [value]="null" selected>Select Community</option>
+            <option *ngFor = "let status of community" [value]="status" >{{ status }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('community').valid && basicForm.get('community').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Mobile Number <span class="required-sign">*</span></label>
+          <span class="input-group-btn">+91</span>
+          <input type="text" class="form-control" formControlName="mobile"  minlength="10" maxlength="10" pattern="[0-9]*" (change)="sendOtp($event.target.value)" />
+          <span *ngIf="basicForm.get('mobile').invalid && (basicForm.get('mobile').dirty || basicForm.get('mobile').touched)" class="error_message">
+            <span *ngIf="basicForm.get('mobile').errors.required">This field is required.</span>
+            <span *ngIf="basicForm.get('mobile').errors.pattern">Mobile No. should be only number.</span>
+            <span *ngIf="!basicForm.get('mobile').errors.pattern && basicForm.get('mobile').errors.minlength">Your mobile number must be at least 10 characters long.</span>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Marital Status <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="marital_status">
+            <option  [value]="null" selected>Select Marital Status</option>
+            <option *ngFor = "let status of marital_status" [value]="status.id" >{{ status.title }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('marital_status').valid && basicForm.get('marital_status').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12"><h4>You Live In </h4></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Select Country <span class="required-sign">*</span></label>
+          <select class="form-control" [(ngModel)]="selectedValue" formControlName="country" (change) = "getState($event.target.value)" >
+            <option  [value]="undefined" selected>Select Country</option>
+            <option *ngFor = "let status of countrys" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('country').valid && basicForm.get('country').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Select State <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="state" (change) = "getCity($event.target.value)">
+            <option  [value]="null" selected>Select State</option>
+            <option *ngFor = "let status of states" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('state').valid && basicForm.get('state').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Select City <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="city">
+            <option  [value]="null" selected>Select City</option>
+            <option *ngFor = "let status of cities" [value]="status.title">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!basicForm.get('city').valid && basicForm.get('city').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary" >Next</button>
+      </div>
+    </div>
+  </form>
+  <form action="" [formGroup]="educationForm" (ngSubmit)="addMember(3, educationForm.value)">
+    <div class="first-section row" *ngIf="step_2">
+        <input type="hidden" formControlName="member_id" [(ngModel)]="member_id" />
+      <div class="col-md-12"><h3>Education Details </h3></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Education Level <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="education_level">
+            <option  [value]="null" selected>Select  Education Level</option>
+            <option *ngFor = "let status of education_level">{{ status }}</option>
+          </select>
+          <span *ngIf="!educationForm.get('education_level').valid && educationForm.get('education_level').touched"
+          class="help-block error_message"> This field is required</span>
+          
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Education Field <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="education_field" />
+          <span *ngIf="!educationForm.get('education_field').valid && educationForm.get('education_field').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Colleges You Attended <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="college_attanded" />
+          <span *ngIf="!educationForm.get('college_attanded').valid && educationForm.get('college_attanded').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12"><h4>Career Details </h4></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">You work With <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="working_with">
+            <option  [value]="null" selected>Select you work </option>
+            <option *ngFor = "let status of work_withs" [value]="status">{{ status }}</option>
+          </select>
+          <span *ngIf="!educationForm.get('working_with').valid && educationForm.get('working_with').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">As Designation <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="designation" />
+          <span *ngIf="!educationForm.get('designation').valid && educationForm.get('designation').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Employer Name <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="employer_name" />
+          <span *ngIf="!educationForm.get('employer_name').valid && educationForm.get('employer_name').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Annual Income <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="annual_income" pattern="[0-9]*" />
+          <span *ngIf="educationForm.get('annual_income').invalid && (educationForm.get('annual_income').dirty || educationForm.get('annual_income').touched)" class="error_message">
+            <span *ngIf="educationForm.get('annual_income').errors.required">This field is required.
+            </span>
+            <span *ngIf="!educationForm.get('annual_income').errors.required && educationForm.get('annual_income').errors.pattern">
+            Annual Income should be only number.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-12 new-btns style">
+        <button type="button" class="btn btn-default registration-prev-btn" (click)="showSteps(1)">Prev</button>
+        <button type="submit" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+  </form>
+  <form action="" [formGroup]="spritualForm" (ngSubmit)="addMember(4, spritualForm.value)">
+    <div class="first-section row" *ngIf="step_3">
+        <input type="hidden" formControlName="member_id" [(ngModel)]="member_id" />
+      <div class="col-md-12"><h3> Spiritual Details</h3></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">How many rounds do you chant? <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="chant_rounds" />
+          <span *ngIf="!spritualForm.get('chant_rounds').valid && spritualForm.get('chant_rounds').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Have you undergone any marriage councelling? <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="undergone_marriage_counselling" />Yes 
+          </label>
+          <label class="form-check-inline">
+           <input type="radio" class="" [value]="0" formControlName="undergone_marriage_counselling" />No
+          </label>
+        </div>
+        <span *ngIf="!spritualForm.get('undergone_marriage_counselling').valid && spritualForm.get('undergone_marriage_counselling').touched"
+          class="help-block error_message"> This field is required</span>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Are You Initiated ? <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+             <input type="radio" class="" [value]="1" formControlName="initiated" />Yes
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="0" formControlName="initiated" />No
+          </label>
+        </div>
+        <span *ngIf="!spritualForm.get('initiated').valid && spritualForm.get('initiated').touched"
+          class="help-block error_message"> This field is required</span>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Who is your initiating Spiritual Master? <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="initiating_spiritual_master" />
+          <span *ngIf="!spritualForm.get('initiating_spiritual_master').valid && spritualForm.get('initiating_spiritual_master').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Do you follow the regulative principles? <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="regulative_principles" />Yes 
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="0" formControlName="regulative_principles" />No
+          </label>
+        </div>
+        <span *ngIf="!spritualForm.get('regulative_principles').valid && spritualForm.get('regulative_principles').touched"
+          class="help-block error_message"> This field is required</span>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Do you have an active service in the temple or devotee community? <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="active_service" />Yes 
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="0" formControlName="active_service" />No
+          </label>
+        </div>
+        <span *ngIf="!spritualForm.get('active_service').valid && spritualForm.get('active_service').touched"
+          class="help-block error_message"> This field is required</span>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Which temple are you associated with? <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="associated_temple" />
+          <span *ngIf="!spritualForm.get('associated_temple').valid && spritualForm.get('associated_temple').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Who is your Menter/Leader/Counseller <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="menter" />
+          <span *ngIf="!spritualForm.get('menter').valid && spritualForm.get('menter').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12 new-btns style">
+        <button type="button" class="btn btn-default registration-prev-btn" (click)="showSteps(2)">Prev</button>
+        <button type="submit" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+  </form>
+  <form action="" [formGroup]="personalForm" (ngSubmit)="addMember(5, personalForm.value)">
+    <div class="first-section row" *ngIf="step_4">
+        <input type="hidden" formControlName="member_id" [(ngModel)]="member_id" />
+        <input type="hidden" formControlName="profile_pic" [(ngModel)]="profile_pic" />
+      <div class="col-md-12"><h3> Personal Details</h3></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Your Height <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="height">
+            <option  [value]="null" selected>Select Your Height</option>
+            <option *ngFor = "let status of heights" [value]="status.id">{{ status.feet }}ft {{ status.inches }}in - {{ status.centimeter }}cm</option>
+          </select>
+          <span *ngIf="!personalForm.get('height').valid && personalForm.get('height').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Body Type <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="body_type">
+            <option  [value]="null" selected>Select Body Type </option>
+            <option *ngFor = "let status of body_type" [value]="status.id" >{{ status.title }}</option>
+          </select>
+          <span *ngIf="!personalForm.get('body_type').valid && personalForm.get('body_type').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Skin Tone <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="skin_tone">
+            <option  [value]="null" selected>Select Skin Tone</option>
+            <option *ngFor = "let status of skin_tone" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!personalForm.get('skin_tone').valid && personalForm.get('skin_tone').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+    
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">About Myself <span class="required-sign">*</span></label>
+          <textarea  formControlName="about" class="form-control"></textarea>
+          <span *ngIf="!personalForm.get('about').valid && personalForm.get('about').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Any Disability? <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="disability" />Yes 
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="0" formControlName="disability" />No
+          </label>
+        </div>
+        <span *ngIf="!personalForm.get('disability').valid && personalForm.get('disability').touched"
+          class="help-block error_message"> This field is required</span>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Photo <span class="required-sign">*</span></label>
+		  <label class="btn btn-default photolabel" for="photo">
+            <input type="file" #fileInput placeholder="Upload Image..." formControlName="photo" id="photo" (change)="upload()" />
+            Upload Image
+          </label>
+          <span *ngIf="!personalForm.get('profile_pic').valid && personalForm.get('profile_pic').touched"
+          class="help-block error_message"> This field is required</span>
+          <div class="error_message">
+              {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+      <div *ngIf="checkImage" class="col-lg-1 col-md-1 col-sm-12">
+          <img src="{{ imagePath }}" width="60px" height="60px">
+      </div>
+      <div class="col-md-12 new-btns style">
+        <button type="button" class="btn btn-default registration-prev-btn" (click)="showSteps(3)">Prev</button>
+        <button type="submit" class="btn btn-primary">Next</button>
+      </div>
+    </div>
+  </form>
+  <form action="" [formGroup]="partnerForm" (ngSubmit)="addMember(0, partnerForm.value)">
+    <div class="first-section row" *ngIf="step_5">
+        <input type="hidden" formControlName="member_id" [(ngModel)]="member_id" />
+      <div class="col-md-12"><h3>Life Partner Details</h3></div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Age From <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_age_from">
+            <option  [value]="null" selected>Select Age</option>
+            <option *ngFor = "let status of age" [value]="status">{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_age_from').valid && partnerForm.get('partner_age_from').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Age To <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_age_to">
+            <option  [value]="null" selected>Select Age</option>
+            <option *ngFor = "let status of age" [value]="status">{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_age_to').valid && partnerForm.get('partner_age_to').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Height From <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_height_from">
+            <option  [value]="null" selected>Select Height</option>
+            <option *ngFor = "let status of heights" [value]="status.id">{{ status.feet }}ft {{ status.inches }}in - {{ status.centimeter }}cm</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_height_from').valid && partnerForm.get('partner_height_from').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Height To <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_height_to">
+            <option  [value]="null" selected>Select Height</option>
+            <option *ngFor = "let status of heights" [value]="status.id">{{ status.feet }}ft {{ status.inches }}in - {{ status.centimeter }}cm</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_height_to').valid && partnerForm.get('partner_height_to').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Marital Status <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_marital_status">
+            <option  [value]="null" selected>Select Marital Status</option>
+            <option *ngFor = "let status of marital_status" [value]="status.id" >{{ status.title }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_marital_status').valid && partnerForm.get('partner_marital_status').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Mother Tongue <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_mother_tongue">
+            <option  [value]="null" selected>Select Mother Tongue</option>
+            <option *ngFor = "let status of mother_tongues" [value]="status">{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_mother_tongue').valid && partnerForm.get('partner_mother_tongue').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Spiritual Master <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="partner_spiritual_master" />
+          <span *ngIf="!partnerForm.get('partner_spiritual_master').valid && partnerForm.get('partner_spiritual_master').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Spiritual Location <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="partner_spiritual_location" />
+          <span *ngIf="!partnerForm.get('partner_spiritual_location').valid && partnerForm.get('partner_spiritual_location').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Spiritual Status <span class="required-sign">*</span></label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="1" formControlName="partner_spiritual_status" />Active
+          </label>
+          <label class="form-check-inline">
+            <input type="radio" class="" [value]="0" formControlName="partner_spiritual_status" />Inactive
+          </label>
+          <span *ngIf="!partnerForm.get('partner_spiritual_status').valid && partnerForm.get('partner_spiritual_status').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12"><h4> Location Details</h4></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Country Living In <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_country" (change) = "getParterState($event.target.value)">
+            <option  [value]="null" selected>Select Country</option>
+            <option *ngFor = "let status of countrys" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_country').valid && partnerForm.get('partner_country').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">State Living In <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_state">
+            <option  [value]="null" selected>Select State</option>
+            <option *ngFor = "let status of partnerState" [value]="status.id">{{ status.title }}</option>
+          </select> 
+          <span *ngIf="!partnerForm.get('partner_state').valid && partnerForm.get('partner_state').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12"><h4>Education & Profession Details </h4></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Education <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_education">
+            <option  [value]="null" selected>Select  Education </option>
+            <option *ngFor = "let status of education_level">{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_education').valid && partnerForm.get('partner_education').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Working With <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_working_with">
+            <option  [value]="null" selected>Select Working With </option>
+            <option *ngFor = "let status of work_withs">{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_working_with').valid && partnerForm.get('partner_working_with').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Profession Area <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_professional_area">
+            <option  [value]="null" selected>Select Profession Area</option>
+            <option *ngFor = "let status of Profession" [value]="status" >{{ status }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_professional_area').valid && partnerForm.get('partner_professional_area').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Annual Income From <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="partner_annual_income_from" pattern="[0-9]*" />
+          <span *ngIf="partnerForm.get('partner_annual_income_from').invalid && (partnerForm.get('partner_annual_income_from').dirty || partnerForm.get('partner_annual_income_from').touched)" class="error_message">
+            <span *ngIf="partnerForm.get('partner_annual_income_from').errors.required">This field is required.
+            </span>
+            <span *ngIf="!partnerForm.get('partner_annual_income_from').errors.required && partnerForm.get('partner_annual_income_from').errors.pattern">
+            Annual Income should be only number.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Annual Income To <span class="required-sign">*</span></label>
+          <input type="text" class="form-control" formControlName="partner_annual_income_to" pattern="[0-9]*" />
+          <span *ngIf="partnerForm.get('partner_annual_income_to').invalid && (partnerForm.get('partner_annual_income_to').dirty || partnerForm.get('partner_annual_income_to').touched)" class="error_message">
+            <span *ngIf="partnerForm.get('partner_annual_income_to').errors.required">This field is required.
+            </span>
+            <span *ngIf="!partnerForm.get('partner_annual_income_to').errors.required && partnerForm.get('partner_annual_income_to').errors.pattern">
+            Annual Income should be only number.
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-12"><h4>Other Details</h4></div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Profile Created By <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_created_by">
+            <option  [value]="null" selected>Select Profile Created By</option>
+            <option *ngFor = "let status of create_for" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_created_by').valid && partnerForm.get('partner_created_by').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Diet <span class="required-sign">*</span></label>
+          <select class="form-control" formControlName="partner_diet">
+            <option  [value]="null" selected>Select Diet</option>
+            <option *ngFor = "let status of diet" [value]="status.id">{{ status.title }}</option>
+          </select>
+          <span *ngIf="!partnerForm.get('partner_diet').valid && partnerForm.get('partner_diet').touched"
+          class="help-block error_message"> This field is required</span>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <button type="button" class="btn btn-default  registration-prev-btn" (click)="showSteps(4)">Prev</button>
+        <button type="submit" class="btn btn-primary">Finish</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss" *ngIf="showpopup == true">
+  <div class="modal-header">
+    <h4 class="modal-title">Enter Otp</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="mobileOtpForm" (ngSubmit)="mobileOtpSubmit(mobileOtpForm.value)">
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-danger" *ngIf="errorOtp">Please Enter the Correct Otp</div>
+        <div class="col-md-12 pwd-sec-one">  
+          <div class="alert alert-success" *ngIf="saveOtp">{{ otpMessage }}</div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-4 pwd-sec">One Time Password </div>
+        <div class="col-md-8 pwd-sec-one"><input type="text" class="form-control" formControlName="otp">
+          <span *ngIf="mobileOtpForm.get('otp').invalid && (mobileOtpForm.get('otp').dirty || mobileOtpForm.get('otp').touched)" class="error_message">
+         <span *ngIf="mobileOtpForm.get('otp').errors.required">This field is required.
+          </span></span></div>
+      </div>
+   
+    </div>
+   
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success">Submit</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</form>
+</ng-template>

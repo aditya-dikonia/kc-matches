@@ -1,0 +1,81 @@
+<div class="overlay" *ngIf="show_loader"><div class="wip-loader"></div></div>
+<footer class="signup-sec">
+  <div class="wrap">
+    <h1>Sign up for Email Updates</h1>
+    <form action="" [formGroup]="signupForm" (ngSubmit)="signUp(signupForm.value)">
+      <div class="alert alert-success saveSuccess-message" *ngIf="saveSuccess">
+          <strong>{{ signUpMessage }}</strong>
+      </div>
+      <div class="alert alert-danger saveSuccess-message" *ngIf="saveFailure">
+          <strong>{{ signUpMessage }}</strong>
+      </div>
+      <div class="row signup-form">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" placeholder="Name" formControlName="name" />
+            <span *ngIf="signupForm.get('name').invalid && (signupForm.get('name').dirty || signupForm.get('name').touched)" class="error_message">
+              <span *ngIf="signupForm.get('name').errors.required">
+                Name is required.
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" placeholder="Email" formControlName="email" />
+            <span *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)" class="error_message">
+              <span *ngIf="signupForm.get('email').errors.required">
+                Email is required.
+              </span>
+              <span *ngIf="!signupForm.get('email').errors.required && signupForm.get('email').errors.pattern">
+                Enter correct email address.
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" placeholder="Phone No" formControlName="phone" maxlength="10" />
+            <span *ngIf="signupForm.get('phone').invalid && (signupForm.get('phone').dirty || signupForm.get('phone').touched)" class="error_message">
+              <span *ngIf="signupForm.get('phone').errors.required">
+                Phone No. is required.
+              </span>
+              <span *ngIf="signupForm.get('phone').errors.pattern">
+                  Phone No. is contain only numbers.
+                </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <input type="submit" value="Submit" class="submit-btn" />
+    </form>
+
+
+    </div>
+
+    <div class="footer-menu-sec">
+      <div class="wrap">
+        <div class="right">
+          <div class="top-menu">
+            <ul>
+              <li class="active"><a routerLink="/">Home</a></li>
+              <li><a routerLink="/about-us">About Us</a></li>
+              <li><a routerLink="/resources">Resources</a></li>
+              <li><a routerLink="/registration">Register Now</a></li>
+              <li><a routerLink="/contact-us">Contact Us</a></li>
+            </ul>
+          </div>
+          <div class="bottom-menu">
+            <ul>
+              <li><a routerLink="/privacy-policy">Privacy Policy  </a></li>
+              <li>|</li>
+              <li><a href="#">Terms & Conditions</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="copyright-sec">Copyright © 2017 Kcmatches. All rights reserved.</p>
+	<p class="info-footer">Designed and Developed by <a target="_blank" href="http://www.dikonia.com">DIKONIA</a></p>
+</footer>

@@ -1,0 +1,57 @@
+<div class="overlay" *ngIf="show_loader"><div class="wip-loader"></div></div>
+<div class="banner-section2">
+<div class="wrap">
+<h2>Contact Us</h2>
+</div>
+</div>
+<section class="sec3-contactus" >
+ <div class="wrap">
+  <div class="contactus">
+  <div class="alert alert-success saveSuccess-message" *ngIf="saveSuccess">
+          <strong>{{ contactMessage }}</strong>
+      </div>
+      <div class="alert alert-danger saveSuccess-message" *ngIf="saveFailure">
+          <strong>{{ contactMessage }}</strong>
+      </div>
+   <form action="" [formGroup]="contactForm" (ngSubmit)="addContact(contactForm.value)">
+  	<div class="div-col1">
+  	<label>Name</label>
+  	<input type="text" name="" placeholder="Enter your Name" formControlName="name">
+   <span *ngIf="contactForm.get('name').invalid && (contactForm.get('name').dirty || contactForm.get('name').touched)" class="error_message">
+	  <div *ngIf="contactForm.get('name').errors.required" style="text-align:left;">
+		This field is required.
+	  </div>
+	</span>  
+  	</div>
+
+    <div class="div-col1">
+  	<label>Email Id</label>
+  	<input type="text" name="" placeholder="Enter your Email" formControlName="email">
+	   <span *ngIf="contactForm.get('email').invalid && (contactForm.get('email').dirty || contactForm.get('email').touched)" class="error_message">
+            <div *ngIf="contactForm.get('email').errors.required" style="text-align:left;">This field is required.
+            </div>
+            <div *ngIf="!contactForm.get('email').errors.required && contactForm.get('email').errors.pattern" style="text-align:left;">
+            Please Enter a Valid Email Address.
+            </div>
+          </span>
+  	</div>
+
+  	 <div class="div-col1">
+  	<label>Message</label>
+  	<textarea cols="3" rows="4" placeholder="Enter your Message" formControlName="message"></textarea>
+	 <div *ngIf="!contactForm.get('message').valid && contactForm.get('message').touched"
+          class="help-block error_message" style="text-align:left;"> This field is required</div>
+  	</div>
+    <div class="div-col1 btn-submit">
+     <input type="submit" value="Submit"/>
+	
+    </div>
+
+  	
+
+
+  </form>
+
+ </div>
+ </div>
+</section>
